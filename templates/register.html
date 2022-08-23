@@ -1,0 +1,45 @@
+{{ template "top" . }}
+    <div>
+        <h4 class="title is-4">{{.title}}</h4>
+    </div>
+    <form class="box" method="post" action="/register">
+        <div class="block has-text-danger">
+            {{.error}}
+        </div>
+        <div class="block field">
+            <label class="label" for="username">
+                Username
+                <span class="has-text-danger">{{.username_error}}</span>
+            </label>
+            <div class="control">
+                <input class="input" type="text" name="username" value="{{.form.username}}"/>
+            </div>
+        </div>
+        <div class="field">
+            <label class="label" for="password">
+                Password
+                <span class="has-text-danger">{{.password_error}}</span>
+            </label>
+            <div class="control">
+                <input class="input" type="password" name="password" value="{{.form.password}}"/>
+            </div>
+        </div>
+        <div class="field">
+            <label class="label" for="password">
+                Confirm Password
+                <span class="has-text-danger">{{.confirm_password_error}}</span>
+            </label>
+            <div class="control">
+                <input class="input" type="password" name="confirm_password" value="{{.form.confirm_password}}"/>
+            </div>
+        </div>
+        <div class="block">
+            <button class="button is-primary" type="submit">
+                Register
+            </button>
+        </div>
+        <div class="block">
+            Have an account? <a href="/register">Login</a>
+        </div>
+    </form>
+{{ template "bottom" . }}

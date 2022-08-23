@@ -1,0 +1,36 @@
+{{ template "top" . }}
+    <div>
+        <h4>{{.title}}</h4>
+    </div>
+    <form class="box" method="post" action="/login">
+        <div class="block has-text-danger">
+            {{.error}}
+        </div>
+        <div class="block has-text-success">
+            {{.message}}
+        </div>
+        <div class="block field">
+            <label class="label" for="username">
+                Username
+                <span class="has-text-danger">{{.username_error}}</span>
+            </label>
+            <div class="control">
+                <input class="input" type="text" name="username"/>
+            </div>
+        </div>
+        <div class="field">
+            <label class="label" for="password">Password</label>
+            <div class="control">
+                <input class="input" type="password" name="password"/>
+            </div>
+        </div>
+        <div class="block">
+            <button class="button is-primary" type="submit">
+                Login
+            </button>
+        </div>
+        <div class="block">
+            No account? <a href="/register">Register</a>
+        </div>
+    </form>
+{{ template "bottom" . }}
