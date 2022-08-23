@@ -9,6 +9,7 @@ import (
 	"gorm.io/gorm"
 
 	"toggle-corp/coding-challenges/internal/models"
+	"toggle-corp/coding-challenges/internal/utils"
 )
 
 type Error = map[string]string
@@ -83,7 +84,7 @@ func ChallengesPostHandler(c *gin.Context, db *gorm.DB, user models.User, templa
 		c.HTML(http.StatusBadRequest, "user_challenge.html", templateCtx)
 		return
 	}
-	// TODO: send for execution
+	go utils.Execute(submission, db)
 	c.Redirect(http.StatusMovedPermanently, "/my-submissions?action=submitted")
 	c.Abort()
 }
@@ -242,5 +243,4 @@ func MySubmissionsGetHandler(c *gin.Context, db *gorm.DB, user models.User, temp
 }
 
 func SubmissionsGetHandler(c *gin.Context, db *gorm.DB, user models.User, templateCtx gin.H) {
-
 }

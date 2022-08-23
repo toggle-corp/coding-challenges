@@ -41,6 +41,7 @@ type SubmissionStatus string
 const (
 	InQueue SubmissionStatus = "in_queue"
 	Running SubmissionStatus = "running"
+	Errored SubmissionStatus = "errored"
 	Failed  SubmissionStatus = "failed"
 	Passed  SubmissionStatus = "passed"
 )
