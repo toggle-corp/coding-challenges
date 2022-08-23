@@ -13,21 +13,13 @@ func RootHandler(c *gin.Context, db DB) {
 	c.HTML(http.StatusOK, "index.html", nil)
 }
 
-func HomeHandler(c *gin.Context, db *gorm.DB) {
-	user_raw, exists := c.Get("user")
-	if !exists {
-		c.Redirect(http.StatusMovedPermanently, "/login")
-		c.Abort()
-		return
-	}
-	ctxValues := make(map[string]interface{})
-	user := user_raw.(models.User)
-	ctxValues["user"] = user
+func GetChallengesHandler(c *gin.Context, db *gorm.DB, user models.User, templateCtx gin.H) {
+	templateCtx["action"] = c.Query("action")
+	templateCtx["Challenges"] = models.GetChallenges(db)
 	if user.IsAdmin {
-		ctxValues["Challenges"] = models.GetChallenges(db)
-		c.HTML(http.StatusOK, "admin_dashboard.html", ctxValues)
+		c.HTML(http.StatusOK, "admin_dashboard.html", templateCtx)
 	} else {
-		c.HTML(http.StatusOK, "home.html", ctxValues)
+		c.HTML(http.StatusOK, "user_challenges.html", templateCtx)
 	}
 }
 

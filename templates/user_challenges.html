@@ -1,44 +1,28 @@
 {{ template "top" .}}
 <div class="container">
-    <span class="subtitle has-text-success">
-        {{if eq .action "create"}}
-            Successful creation of challenge
-        {{else if eq .action "update"}}
-            Challenge updated
-        {{end}}
-    </span>
     <div class="columns ">
         <div class="column is-2">
             <h3 class="title is-4">
                 Challenges
             </h3>
         </div>
-        <div class="column is-1">
-                <a href="/new-challenge">
-                    <button type="button" class="button is-success is-link">
-                        Create New Challenge
-                    </button>
-                </a>
-        </div>
     </div>
-    <div>
+    <div class="box">
         <table class="table is-fullwidth is-striped">
             <thead>
                 <tr>
                     <th>Id</th>
                     <th>Title</th>
-                    <th>Published?</th>
-                    <th>Created At</th>
+                    <th>Published At</th>
                     <th>Created By</th>
-                    <th>Submissions</th>
+                    <th>Submisssions</th>
                 </tr>
             </thead>
             <tbody>
                 {{range .Challenges}}
                     <tr>
                         <td>{{.ID}}</td>
-                        <td><a href="/edit-challenge/{{.ID}}">{{.Title}}</a></td>
-                        <td>{{if .IsPublished}}Published{{else}}Not Published{{end}}</td>
+                        <td><a href="/challenge/{{.ID}}">{{.Title}}</a></td>
                         <td>{{.CreatedAt | formatAsDate}}</td>
                         <td>{{.CreatedBy}}</td>
                         <td>{{.Submissions}}</td>

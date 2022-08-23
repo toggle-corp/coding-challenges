@@ -1,0 +1,38 @@
+{{ template "top" .}}
+<div class="container">
+    <span class="subtitle has-text-success">
+        {{.message}}
+    </span>
+    <div class="columns block">
+        <h3 class="title is-4">
+            My submissions
+        </h3>
+    </div>
+    <div class="box columns block">
+        <table class="table is-fullwidth is-striped">
+            <thead>
+                <tr>
+                    <th>Sub. Id</th>
+                    <th>Challenge</th>
+                    <th>Submitted At</th>
+                    <th>Language</th>
+                    <th>Status</th>
+                    <th>Score</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{range .submissions}}
+                    <tr>
+                        <td>{{.ID}}</td>
+                        <td>{{.ChallengeTitle}}</td>
+                        <td>{{.CreatedAt | formatAsDate}}</td>
+                        <td>{{.Language}}</td>
+                        <td>{{.Status}}</td>
+                        <td>{{.Score}}</td>
+                    </tr>
+                {{end}}
+            </tbody>
+        </table>
+    </div>
+</div>
+{{ template "bottom" .}}

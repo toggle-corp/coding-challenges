@@ -1,6 +1,7 @@
 package models
 
 import (
+	"fmt"
 	"time"
 
 	"gorm.io/gorm"
@@ -64,14 +65,37 @@ type ChallengesResult struct {
 	Submissions int
 	Title       string
 	CreatedBy   string
+	IsPublished bool
 	CreatedAt   time.Time
 }
 
 func GetChallenges(db *gorm.DB) []ChallengesResult {
 	var results []ChallengesResult
 	db.Raw(`select challenges.id, count(submissions.id) as submissions, title, users.username as created_by,
-		challenges.created_at from challenges left join submissions on
+		challenges.is_published, challenges.created_at from challenges left join submissions on
 		submissions.challenge_id=challenges.id left join users on users.id =
 		challenges.created_by group by (challenges.id, users.id)`).Scan(&results)
+	return results
+}
+
+type SubmissionsResult struct {
+	ID             int
+	ChallengeTitle string
+	CreatedAt      time.Time
+	Language       string
+	Status         string
+	Score          int
+	SubmittedBy    int
+}
+
+func GetSubmissions(db *gorm.DB, user User) []SubmissionsResult {
+	var results []SubmissionsResult
+	db.Raw(fmt.Sprintf(`select submissions.id,
+		challenges.title as challenge_title, submissions.created_at,
+		submissions.language, submissions.status, submissions.score,
+		submissions.submitted_by from submissions left join challenges
+		on submissions.challenge_id = challenges.id where
+		submissions.submitted_by=%v
+	`, user.ID)).Scan(&results)
 	return results
 }

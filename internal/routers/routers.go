@@ -12,6 +12,7 @@ import (
 
 var withDB = utils.WithDB
 var withDBAdmin = utils.WithDBAdmin
+var withDBUser = utils.WithDBUser
 
 func PublicRoutes(g *gin.RouterGroup, db *gorm.DB) {
 	g.GET("/", withDB(h.RootHandler, db))
@@ -25,12 +26,15 @@ func PublicRoutes(g *gin.RouterGroup, db *gorm.DB) {
 }
 
 func PrivateRoutes(g *gin.RouterGroup, db *gorm.DB) {
-	g.GET("/home", withDB(h.HomeHandler, db))
-	g.GET("/challenges", withDB(h.ChallengesGetHandler, db))
+	g.GET("/challenges", withDBUser(h.GetChallengesHandler, db))
+	g.GET("/challenge/:id", withDBUser(h.ChallengesGetHandler, db))
+	g.POST("/challenge/:id", withDBUser(h.ChallengesPostHandler, db))
+	g.GET("/my-submissions", withDBUser(h.MySubmissionsGetHandler, db))
+	g.POST("/submissions/:challengeId", withDBUser(h.SubmissionsGetHandler, db))
 	g.GET("/new-challenge", withDBAdmin(h.NewChallengeGetHandler, db))
 	g.POST("/new-challenge", withDBAdmin(h.NewChallengePostHandler, db))
 	g.GET("/edit-challenge/:id", withDBAdmin(h.EditChallengeGetHandler, db))
-	g.PUT("/edit-challenge/:id", withDBAdmin(h.EditChallengePutHandler, db))
+	g.POST("/edit-challenge/:id", withDBAdmin(h.EditChallengePostHandler, db))
 	g.GET("/profile", withDB(h.ProfileGetHandler, db))
 	g.GET("/logout", withDB(h.LogoutHandler, db))
 }

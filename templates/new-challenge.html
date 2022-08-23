@@ -1,67 +1,75 @@
 {{template "top" .}}
     <div>
-        <h4 class="title is-4">New challenge</h4>
+        <h4 class="title is-4">
+            {{.title}}
+        </h4>
     </div>
-    <form class="box" method="post" action="/new-challenge">
+    <form class="box" method="{{.method}}" action="{{.action}}">
         <div class="block has-text-danger">
             {{.error}}
         </div>
         <div class="field">
             <label class="label" for="title">
                 Title
-                <span class="has-text-danger">{{.errors.title}}</span>
+                <span class="has-text-danger">{{.errors.Title}}</span>
             </label>
             <div class="control">
-                <input class="input" type="text" name="title" value="{{.challenge.Title}}"/>
+                <input class="input" type="text" name="Title" value="{{.challenge.Title}}"/>
             </div>
         </div>
         <div class="field">
-            <label class="label" for="problem_statement">
+            <label class="label" for="ProblemStatement">
                 Problem Statement
-                <span class="has-text-danger">{{.errors.problem_statement}}</span>
+                <span class="has-text-danger">{{.errors.ProblemStatement}}</span>
             </label>
             <div class="control">
-                <textarea class="textarea" name="problem_statement" rows="10" value="{{.challenge.ProblemStatement}}">
-                </textarea>
+                <textarea class="textarea" name="ProblemStatement" rows="10">{{.challenge.ProblemStatement}}</textarea>
             </div>
         </div>
         <div class="field">
-            <label class="label" for="test_inputs">
+            <label class="label" for="TestInputs">
                 Test Inputs
-                <span class="has-text-danger">{{.errors.test_inputs}}</span>
+                <span class="has-text-danger">{{.errors.TestInputs}}</span>
             </label>
             <div class="control">
-                <textarea class="textarea" name="test_inputs" rows="10" value="{{.challenge.TestInputs}}">
-                </textarea>
+                <textarea class="textarea" name="TestInputs" rows="10">{{.challenge.TestInputs}}</textarea>
             </div>
         </div>
         <div class="field">
-            <label class="label" for="test_outputs">
+            <label class="label" for="TestOutputs">
                 Test Outputs
-                <span class="has-text-danger">{{.errors.test_outputs}}</span>
+                <span class="has-text-danger">{{.errors.TestOutputs}}</span>
             </label>
             <div class="control">
-                <textarea class="textarea" name="test_outputs" rows="10" value="{{.challenge.TestOutputs}}">
-                </textarea>
+                <textarea class="textarea" name="TestOutputs" rows="10">{{.challenge.TestOutputs}}</textarea>
             </div>
         </div>
         <div class="field">
             <label class="checkbox" >
-                <input name="is_published" type="checkbox" checked={{.challenge.IsPublished}}>
+                <input name="IsPublished" type="checkbox" checked={{.challenge.IsPublished}}>
                 Publish
             </label>
         </div>
         <div class="field">
-            <label class="label" for="score">
+            <label class="label" for="Score">
                 Score
-                <span class="has-text-danger">{{.errors.score}}</span>
+                <span class="has-text-danger">{{.errors.Score}}</span>
             </label>
-            <input class="input" type="number" name="score" value="{{.challenge.Score}}"/>
+            <input class="input" type="number" name="Score" value="{{.challenge.Score}}"/>
         </div>
-        <div class="field">
+        <div class="field buttons">
+            {{if .edit}}
             <button class="button is-primary" type="submit">
-                Add Challenge
+                Update
             </button>
+            <button class="button is-danger" type="button">
+                Delete
+            </button>
+            {{else}}
+                <button class="button is-primary" type="submit">
+                    Add
+                </button>
+            {{end}}
         </div>
     </form>
 {{template "bottom" .}}

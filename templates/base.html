@@ -13,17 +13,23 @@
                     <h1 class="title">TC Coding Challenge</h1>
                 </a>
             </div>
-            <div class="navbar-end">
-                <div class="navbar-item">
-                    {{if .user}}
-                        {{.user.Username}}
-                        {{if .user.IsAdmin}}
-                            [Admin]
-                        {{end}}
-                        &nbsp;(<a href="/logout">Logout</a>)
-                    {{end}}
-                </div>
-            </div>
+            {{if .user}}
+                <div class="navbar-menu">
+                    <div class="navbar-start">
+                        <a class="navbar-item" href="/my-submissions">Submissions</a>
+                        <a class="navbar-item" href="/challenges">Challenges</a>
+                    </div>
+                    <div class="navbar-end">
+                        <div class="navbar-item">
+                            {{.user.Username}}
+                            {{if .user.IsAdmin}}
+                                [Admin]
+                            {{end}}
+                            &nbsp;(<a href="/logout">Logout</a>)
+                        </div>
+                    </div>
+                <div>
+            {{end}}
         </nav>
         <hr/>
         <div class="container">

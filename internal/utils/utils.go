@@ -55,7 +55,7 @@ func ConnectDB() (*gorm.DB, error) {
 }
 
 type DBHandler = func(_ *gin.Context, db_ *gorm.DB)
-type DBUserHandler = func(_ *gin.Context, db_ *gorm.DB, _ models.User)
+type DBUserHandler = func(_ *gin.Context, db_ *gorm.DB, _ models.User, _ gin.H)
 
 func WithDB(handler DBHandler, db *gorm.DB) func(c *gin.Context) {
 	return func(c *gin.Context) {
@@ -66,12 +66,26 @@ func WithDB(handler DBHandler, db *gorm.DB) func(c *gin.Context) {
 func WithDBAdmin(handler DBUserHandler, db *gorm.DB) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		user_raw, exists := c.Get("user")
-		if !exists {
+		if !exists || !user_raw.(models.User).IsAdmin {
 			c.Redirect(http.StatusMovedPermanently, "/forbidden")
 			c.Abort()
 			return
 		}
-		handler(c, db, user_raw.(models.User))
+		tctx := gin.H{"user": user_raw.(models.User)}
+		handler(c, db, user_raw.(models.User), tctx)
+	}
+}
+
+func WithDBUser(handler DBUserHandler, db *gorm.DB) func(c *gin.Context) {
+	return func(c *gin.Context) {
+		user_raw, exists := c.Get("user")
+		if !exists {
+			c.Redirect(http.StatusMovedPermanently, "/login")
+			c.Abort()
+			return
+		}
+		tctx := gin.H{"user": user_raw.(models.User)}
+		handler(c, db, user_raw.(models.User), tctx)
 	}
 }
 

@@ -1,0 +1,50 @@
+{{ template "top" .}}
+<div class="container">
+    <div class="columns block">
+        <div class="column">
+            <h3 class="title is-4">
+                {{ .title }}
+            </h3>
+        </div>
+    </div>
+    <div class="columns block">
+        <div class="column">
+            <p class="box">{{.challenge.ProblemStatement}}</textarea>
+        </div>
+        <div class="column">
+            <form class="box form" method="post" action="/challenge/{{.challenge.ID}}">
+                <div class="block has-text-danger">
+                    {{.error}}
+                </div>
+                <div class="field">
+                    <label class="label" for="Language">
+                        Language
+                        <span class="has-text-danger">{{.errors.Language}}</span>
+                    </label>
+                    <div class="select">
+                        <select name="Language" value="{{.submission.Language}}">
+                            <option value="python">Python</option>
+                            <option value="javascript">Javascript</option>
+                            <option value="go">Go</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label" for="code">
+                        Solution code
+                        <span class="has-text-danger">{{.errors.SubmittedCode}}</span>
+                    </label>
+                    <div class="control">
+                        <textarea class="textarea" name="SubmittedCode" rows="20">{{.submission.SubmittedCode}}</textarea>
+                    </div>
+                </div>
+                <div class="block">
+                    <button class="button is-primary" type="submit">
+                        Submit Solution
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{{ template "bottom" .}}
