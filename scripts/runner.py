@@ -5,7 +5,7 @@ import sys
 
 
 TEST_INPUT = './test_inputs'
-TEST_OUTPUT = './test_inputs'
+TEST_OUTPUT = './test_outputs'
 
 def main():
     with open(TEST_INPUT) as finp, open(TEST_OUTPUT) as fout:
@@ -26,7 +26,8 @@ def main():
             result = solution(inpargs)
 
         if result != expected:
-            print(f'Failed for test case {i+1}', file=sys.stderr)
+            print(f'Failed for test case {i+1}.', file=sys.stderr)
+            print(f'Expected:{expected} Got: {result}', file=sys.stderr)
             print(f'Passed {passed_count}/{total_count}', file=sys.stderr)
             sys.exit(43)
 
