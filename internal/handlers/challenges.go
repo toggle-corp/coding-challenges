@@ -46,7 +46,8 @@ func validateSubmission(c *gin.Context) (models.Submission, Error) {
 		valid = false
 		errors["SubmittedCode"] = "Code cannot be empty"
 	}
-	submission.SubmittedCode = submittedCode
+	// Replace tab with spaces
+	submission.SubmittedCode = strings.Replace(submittedCode, "\t", "    ", -1)
 	if !valid {
 		return submission, errors
 	}
