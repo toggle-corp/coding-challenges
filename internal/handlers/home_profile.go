@@ -9,8 +9,8 @@ import (
 	"toggle-corp/coding-challenges/internal/models"
 )
 
-func RootHandler(c *gin.Context, db DB) {
-	c.HTML(http.StatusOK, "index.html", nil)
+func RootHandler(c *gin.Context, db DB, user models.User, templateCtx gin.H) {
+	c.HTML(http.StatusOK, "index.html", templateCtx)
 }
 
 func GetChallengesHandler(c *gin.Context, db *gorm.DB, user models.User, templateCtx gin.H) {

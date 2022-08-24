@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"html/template"
+	"net/http"
 
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/cookie"
@@ -36,5 +37,15 @@ func main() {
 	private.Use(middleware.AuthRequired(db))
 	routers.PrivateRoutes(private, db)
 
-	r.Run()
+	if utils.GetOSEnv("GIN_MODE", "local") == "release" {
+		// get key and cert
+		// r.RunTLS("0.0.0.0:443", "./server.cert", "./server.keys")
+		err := http.ListenAndServeTLS("0.0.0.0:443", "./server.cert", "./server.key", r)
+		if err != nil {
+			fmt.Println("Could not start WebServer")
+			fmt.Println(err)
+		}
+	} else {
+		r.Run()
+	}
 }

@@ -15,7 +15,6 @@ var withDBAdmin = utils.WithDBAdmin
 var withDBUser = utils.WithDBUser
 
 func PublicRoutes(g *gin.RouterGroup, db *gorm.DB) {
-	g.GET("/", withDB(h.RootHandler, db))
 	g.GET("/login", h.LoginGetHandler)
 	g.POST("/login", withDB(h.LoginHandler, db))
 	g.GET("/register", h.RegisterGetHandler)
@@ -26,6 +25,7 @@ func PublicRoutes(g *gin.RouterGroup, db *gorm.DB) {
 }
 
 func PrivateRoutes(g *gin.RouterGroup, db *gorm.DB) {
+	g.GET("/", withDBUser(h.RootHandler, db))
 	g.GET("/challenges", withDBUser(h.GetChallengesHandler, db))
 	g.GET("/challenge/:id", withDBUser(h.ChallengesGetHandler, db))
 	g.POST("/challenge/:id", withDBUser(h.ChallengesPostHandler, db))
