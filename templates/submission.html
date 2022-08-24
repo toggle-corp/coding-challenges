@@ -1,0 +1,39 @@
+{{ template "top" .}}
+<div class="container">
+    <div class="columns block">
+        <div class="column">
+            <h3 class="title is-4">
+                Challenge: {{.submission.Challenge.Title}}
+            </h3>
+            <div class="subtitle">
+                Status: 
+                <span class="has-text-{{if eq .submission.Status "passed"}}success{{else}}danger{{end}}">
+                  {{.submission.Status}}
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="columns block">
+        <div class="column">
+            <span class="title is-4">Problem</span>
+            <p class="box" style="white-space:pre-wrap; text-indent: 0">
+                {{.submission.Challenge.ProblemStatement}}
+            </p>
+        </div>
+        <div class="column">
+            <span class="title is-4">Submitted Code</span>
+            <pre class="box" style="white-space:pre-wrap">{{.submission.SubmittedCode}}</pre>
+        </div>
+    </div>
+    {{if ne .submission.Status "passed"}}
+        <div class="columns block">
+            <div class="column">
+                <span class="title is-4">Error Output</span>
+                <pre class="box" style="white-space:pre-wrap">
+                    {{.submission.Error}}
+                </pre>
+            </div>
+        </div>
+    {{end}}
+</div>
+{{ template "bottom". }}

@@ -24,10 +24,12 @@
                 {{range .submissions}}
                     <tr>
                         <td>{{.ID}}</td>
-                        <td>{{.ChallengeTitle}}</td>
+                        <td>
+                            <a href="/submission/{{.ID}}">{{.ChallengeTitle}}</a>
+                        </td>
                         <td>{{.CreatedAt | formatAsDate}}</td>
                         <td>{{.Language}}</td>
-                        <td>{{.Status}}</td>
+                        <td class="has-text-{{if eq .Status "passed"}}success{{else}}danger{{end}}">{{.Status}}</td>
                         <td>{{.Score}}</td>
                     </tr>
                 {{end}}

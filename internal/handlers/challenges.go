@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
@@ -241,6 +242,20 @@ func MySubmissionsGetHandler(c *gin.Context, db *gorm.DB, user models.User, temp
 	templateCtx["submissions"] = submissions
 	templateCtx["message"] = message
 	c.HTML(http.StatusOK, "submissions.html", templateCtx)
+}
+
+func SubmissionGetHandler(c *gin.Context, db *gorm.DB, user models.User, templateCtx gin.H) {
+	// show details for a particular submission
+	sid := c.Param("id")
+	var sb models.Submission
+	result := db.Preload("Challenge").First(&sb, sid)
+	if result.Error != nil || result.RowsAffected == 0 {
+		c.HTML(http.StatusNotFound, "notfound.html", nil)
+		return
+	}
+	templateCtx["submission"] = sb
+	fmt.Println(sid, sb.Status)
+	c.HTML(http.StatusOK, "submission.html", templateCtx)
 }
 
 func SubmissionsGetHandler(c *gin.Context, db *gorm.DB, user models.User, templateCtx gin.H) {

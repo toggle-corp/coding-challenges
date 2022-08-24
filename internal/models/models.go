@@ -101,7 +101,7 @@ func GetSubmissions(db *gorm.DB, user User) []SubmissionsResult {
 		submissions.language, submissions.status, submissions.score,
 		submissions.submitted_by from submissions left join challenges
 		on submissions.challenge_id = challenges.id where
-		submissions.submitted_by=%v
+		submissions.submitted_by=%v order by submissions.id desc
 	`, user.ID)).Scan(&results)
 	return results
 }
