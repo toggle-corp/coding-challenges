@@ -45,8 +45,8 @@
             </div>
         </div>
         <div class="field">
-            <label class="checkbox" >
-                <input name="IsPublished" type="checkbox" checked={{.challenge.IsPublished}}>
+            <label class="checkbox" for="IsPublished">
+                <input name="IsPublished" type="checkbox" {{if .challenge.IsPublished}}checked{{end}}>
                 Publish
             </label>
         </div>
@@ -62,9 +62,11 @@
             <button class="button is-primary" type="submit">
                 Update
             </button>
+            <!--
             <button class="button is-danger" type="button">
                 Delete
             </button>
+            -->
             {{else}}
                 <button class="button is-primary" type="submit">
                     Add

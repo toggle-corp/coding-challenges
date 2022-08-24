@@ -15,7 +15,7 @@ func RootHandler(c *gin.Context, db DB) {
 
 func GetChallengesHandler(c *gin.Context, db *gorm.DB, user models.User, templateCtx gin.H) {
 	templateCtx["action"] = c.Query("action")
-	templateCtx["Challenges"] = models.GetChallenges(db)
+	templateCtx["Challenges"] = models.GetChallenges(db, user.IsAdmin)
 	if user.IsAdmin {
 		c.HTML(http.StatusOK, "admin_dashboard.html", templateCtx)
 	} else {

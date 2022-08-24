@@ -9,11 +9,11 @@ import (
 
 type User struct {
 	gorm.Model
-	Username  string    `json:"username";gorm:"unique"`
-	Password  string    `json:"password"`
-	LastLogin time.Time `json:"lastLogin"`
-	IsAdmin   bool      `gorm:"default:false"`
-	IsGuest   bool      `gorm:"default:false"`
+	Username  string `gorm:"unique"`
+	Password  string
+	LastLogin time.Time
+	IsAdmin   bool `gorm:"default:false"`
+	IsGuest   bool `gorm:"default:false"`
 }
 
 type Challenge struct {
@@ -70,12 +70,17 @@ type ChallengesResult struct {
 	CreatedAt   time.Time
 }
 
-func GetChallenges(db *gorm.DB) []ChallengesResult {
+func GetChallenges(db *gorm.DB, isAdmin bool) []ChallengesResult {
 	var results []ChallengesResult
-	db.Raw(`select challenges.id, count(submissions.id) as submissions, title, users.username as created_by,
+	query := `select challenges.id, count(submissions.id) as submissions, title, users.username as created_by,
 		challenges.is_published, challenges.created_at from challenges left join submissions on
 		submissions.challenge_id=challenges.id left join users on users.id =
-		challenges.created_by group by (challenges.id, users.id)`).Scan(&results)
+		challenges.created_by `
+	if !isAdmin {
+		query += " where challenges.is_published = true "
+	}
+	query += " group by (challenges.id, users.id)"
+	db.Raw(query).Scan(&results)
 	return results
 }
 

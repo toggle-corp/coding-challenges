@@ -138,7 +138,7 @@ func validateChallengeInputs(c *gin.Context) (models.Challenge, Error) {
 		return challenge, errors
 	}
 	var published bool
-	if isPublished == "true" {
+	if isPublished != "" {
 		published = true
 	} else {
 		published = false
@@ -173,7 +173,7 @@ func NewChallengePostHandler(c *gin.Context, db *gorm.DB, admin models.User, tem
 		c.HTML(http.StatusBadRequest, "new-challenge.html", templateCtx)
 		return
 	}
-	c.Redirect(http.StatusMovedPermanently, "/home?action=create")
+	c.Redirect(http.StatusMovedPermanently, "/challenges?action=create")
 	c.Abort()
 }
 
@@ -218,7 +218,7 @@ func EditChallengePostHandler(c *gin.Context, db *gorm.DB, admin models.User, te
 		c.HTML(http.StatusBadRequest, "new-challenge.html", templateCtx)
 	}
 	// do update
-	res := db.Model(&ch).Updates(challenge)
+	res := db.Model(&ch).Select("IsPublished", "Title", "ProblemStatement", "TestInputs", "TestOutputs", "Score").Updates(challenge)
 	if res.Error != nil {
 		templateCtx["error"] = "Cound not update"
 		templateCtx["challenge"] = challenge
@@ -226,7 +226,7 @@ func EditChallengePostHandler(c *gin.Context, db *gorm.DB, admin models.User, te
 		return
 	}
 	// Redirect to challenges with a message
-	c.Redirect(http.StatusMovedPermanently, "/home?action=update")
+	c.Redirect(http.StatusMovedPermanently, "/challenges?action=update")
 	c.Abort()
 }
 
