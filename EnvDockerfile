@@ -1,0 +1,31 @@
+FROM alpine:latest as sshd
+
+MAINTAINER bewakes bibek.pandey@togglecorp.com
+
+RUN apk add --update --no-cache openssh bash
+
+RUN adduser -h /home/runner -s /bin/sh -D runner && \
+    echo "runner:runnerpwd" |chpasswd  && \
+    mkdir -p /home/runner/.ssh && \
+    chmod 700 /home/runner/.ssh
+
+COPY ./keys/id_rsa.pub /home/runner/.ssh/authorized_keys
+RUN chown runner:runner -R /home/runner/.ssh && \
+    chmod 600 /home/runner/.ssh/authorized_keys
+
+EXPOSE 22
+
+
+FROM sshd as runnerenv
+
+USER runner
+WORKDIR /home/runner
+COPY ./scripts ./scripts
+
+USER root
+RUN ssh-keygen -A
+RUN apk add --no-cache python3
+
+CMD /usr/sbin/sshd -D
+
+# vim: syntax=dockerfile
