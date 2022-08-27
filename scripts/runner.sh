@@ -20,7 +20,7 @@ runcmd=
 case $lang in
     python)
         ext=py
-        runcmd=python
+        runcmd=python3
         ;;
     javascript)
         ext=js
@@ -37,9 +37,9 @@ case $lang in
 esac
 
 # Move files
-mv /tmp/code_$submission_id /tmp/$dirname/solution.$ext
-mv /tmp/test_$submission_id /tmp/$dirname/test_inputs
-mv /tmp/out_$submission_id /tmp/$dirname/test_outputs
+cp /tmp/code_$submission_id /tmp/$dirname/solution.$ext
+cp /tmp/test_$submission_id /tmp/$dirname/test_inputs
+cp /tmp/out_$submission_id /tmp/$dirname/test_outputs
 
 runnerfile=runner.$ext
 errpath=/tmp/$dirname/errs

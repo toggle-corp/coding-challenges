@@ -16,8 +16,7 @@
     <div class="columns block">
         <div class="column">
             <span class="title is-4">Problem</span>
-            <p class="box" style="white-space:pre-wrap; text-indent: 0">
-                {{.submission.Challenge.ProblemStatement}}
+            <p class="box" style="white-space:pre-wrap; text-indent: 0">{{.submission.Challenge.ProblemStatement}}
             </p>
         </div>
         <div class="column">
@@ -29,11 +28,16 @@
         <div class="columns block">
             <div class="column">
                 <span class="title is-4">Error Output</span>
-                <pre class="box" style="white-space:pre-wrap">
-                    {{.submission.Error}}
-                </pre>
+                <pre class="box" style="white-space:pre-wrap">{{.submission.Error}}</pre>
             </div>
         </div>
     {{end}}
+    <div class="block">
+        <a href="/challenge/{{.submission.ChallengeID}}">
+            <button type="button" class="button is-success is-link">
+                Solve again
+            </button>
+        </a>
+    </div>
 </div>
 {{ template "bottom". }}

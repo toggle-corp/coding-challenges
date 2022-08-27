@@ -1,2 +1,2 @@
 [build]
-exclude_dir = ["postgres-data"]
+exclude_dir = ["postgres-data", "_postgres-data"]

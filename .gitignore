@@ -1,2 +1,5 @@
 postgres-data/
+_postgres-data/
+keys/
 tmp/
+.env

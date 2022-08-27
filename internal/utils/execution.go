@@ -14,7 +14,7 @@ import (
 
 func writeTmpcode(subs *models.Submission, name string, content string) string {
 	tmpFname := fmt.Sprintf("/tmp/%v_%v", name, subs.ID)
-	err := os.WriteFile(tmpFname, []byte(content), 0444)
+	err := os.WriteFile(tmpFname, []byte(content), 0777)
 	if err != nil {
 		log.Fatal(err)
 		return ""
@@ -59,7 +59,19 @@ func Execute(subs models.Submission, db *gorm.DB) {
 		errorSubscription(&subs, errMsg, db)
 		return
 	}
-	cmd := exec.Command(runnerScript, string(subs.Language), fmt.Sprint(subs.ID))
+
+	defer func() {
+		rmcmd := exec.Command("rm", tmpCode, tmpTest, tmpOuts)
+		runAndGetError(rmcmd)
+	}()
+
+	var cmd *exec.Cmd
+	if GetOSEnv("GIN_MODE", "local") == "release" {
+		cmd = exec.Command("ssh", "runner@runnerenv", runnerScript, string(subs.Language), fmt.Sprint(subs.ID))
+	} else {
+		// Do not ssh, directly call
+		cmd = exec.Command(runnerScript, string(subs.Language), fmt.Sprint(subs.ID))
+	}
 	cmdCode, cmderr := runAndGetError(cmd)
 	if cmdCode == 0 {
 		log.Println("Successful execution")
