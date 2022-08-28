@@ -16,10 +16,7 @@ services:
       - "5434:5432"
 
   runnerenv:
-    build:
-      context: .
-      dockerfile: EnvDockerfile
-      target: runnerenv
+    image: ghcr.io/toggle-corp/code-runner:latest
     tty: true
     mem_limit: 50m
     mem_reservation: 20m
@@ -28,13 +25,11 @@ services:
       - ./keys:/keys
 
   go_server:
-    build:
-      context: .
+    image: ghcr.io/toggle-corp/coding-challenges:latest
     env_file: ./.env
     ports:
       - "8080:8080"
       - "443:443"
-    command: bash -c 'ssh-keyscan runnerenv > ~/.ssh/known_hosts && /go/app/scripts/wait-for-it.sh $POSTGRES_HOSTNAME:$POSTGRES_PORT && /go/app/coding-challenge'
     depends_on:
       - db
       - runnerenv

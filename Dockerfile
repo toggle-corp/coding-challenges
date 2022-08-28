@@ -13,10 +13,9 @@ FROM ubuntu:18.04 as app
 RUN apt update -y && apt install openssh-client -y
 
 RUN mkdir -p $HOME/.ssh/
-RUN ssh-keygen -t rsa -q -f "$HOME/.ssh/id_rsa" -N ""
-
-# TODO: ADD to known hosts
 
 WORKDIR /go/app
 COPY . /go/app
 COPY --from=app-builder /go/app/coding-challenge /go/app/coding-challenge
+
+ENTRYPOINT ["/go/app/scripts/server_entrypoint.sh"]
