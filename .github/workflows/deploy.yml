@@ -1,8 +1,8 @@
 name: deploy-to-server
 on:
- push:
-   branches:
-     - master
+  push:
+    branches:
+      - master
 
 env:
   REGISTRY: ghcr.io
@@ -11,6 +11,7 @@ env:
 jobs:
   deploy:
     name: Deploy to server
+    needs: build-push-image
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -21,3 +22,5 @@ jobs:
           known_hosts: 'placeholder'
       - name: Install known host
         run: ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+      - name: Invoke deployment
+        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} ./coding-challenges/deploy.sh

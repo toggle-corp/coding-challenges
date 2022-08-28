@@ -1,5 +1,8 @@
 name: build-push-image
-on: [push]
+on:
+  push:
+    branches:
+      - master
 
 env:
   REGISTRY: ghcr.io

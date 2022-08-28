@@ -7,6 +7,7 @@ trap 'last_command=$current_command; current_command=$BASH_COMMAND' DEBUG
 trap 'echo "`date`:: \"${last_command}\" command filed with exit code $?." > ~/deploy-error.log' EXIT
 
 cd ~/coding-challenges
+git pull
 docker-compose stop
 docker-compose pull
 docker-compose up
