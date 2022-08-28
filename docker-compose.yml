@@ -16,7 +16,7 @@ services:
       - "5434:5432"
 
   runnerenv:
-    image: ghcr.io/toggle-corp/code-runner:latest
+    image: ghcr.io/toggle-corp/code-runner:master
     tty: true
     mem_limit: 50m
     mem_reservation: 20m
@@ -25,7 +25,7 @@ services:
       - ./keys:/keys
 
   go_server:
-    image: ghcr.io/toggle-corp/coding-challenges:latest
+    image: ghcr.io/toggle-corp/coding-challenges:master
     env_file: ./.env
     ports:
       - "8080:8080"
