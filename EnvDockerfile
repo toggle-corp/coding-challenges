@@ -9,12 +9,7 @@ RUN adduser -h /home/runner -s /bin/sh -D runner && \
     mkdir -p /home/runner/.ssh && \
     chmod 700 /home/runner/.ssh
 
-# COPY ./keys/id_rsa.pub /home/runner/.ssh/authorized_keys
-# RUN chown runner:runner -R /home/runner/.ssh && \
-#     chmod 600 /home/runner/.ssh/authorized_keys
-
 EXPOSE 22
-
 
 FROM sshd as runnerenv
 
