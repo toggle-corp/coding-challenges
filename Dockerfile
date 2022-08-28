@@ -13,9 +13,7 @@ FROM ubuntu:18.04 as app
 RUN apt update -y && apt install openssh-client -y
 
 RUN mkdir -p $HOME/.ssh/
-RUN ssh-keygen -t rsa -q -f "$HOME/.ssh/id_rsa" -N ""
-
-# TODO: ADD to known hosts
+# RUN ssh-keygen -t rsa -q -f "$HOME/.ssh/id_rsa" -N ""
 
 WORKDIR /go/app
 COPY . /go/app

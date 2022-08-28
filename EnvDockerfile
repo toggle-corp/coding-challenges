@@ -9,9 +9,9 @@ RUN adduser -h /home/runner -s /bin/sh -D runner && \
     mkdir -p /home/runner/.ssh && \
     chmod 700 /home/runner/.ssh
 
-COPY ./keys/id_rsa.pub /home/runner/.ssh/authorized_keys
-RUN chown runner:runner -R /home/runner/.ssh && \
-    chmod 600 /home/runner/.ssh/authorized_keys
+# COPY ./keys/id_rsa.pub /home/runner/.ssh/authorized_keys
+# RUN chown runner:runner -R /home/runner/.ssh && \
+#     chmod 600 /home/runner/.ssh/authorized_keys
 
 EXPOSE 22
 
@@ -26,6 +26,6 @@ USER root
 RUN ssh-keygen -A
 RUN apk add --no-cache python3
 
-CMD /usr/sbin/sshd -D
+ENTRYPOINT ["/home/runner/scripts/env_entrypoint.sh"]
 
 # vim: syntax=dockerfile
