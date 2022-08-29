@@ -22,7 +22,7 @@
                         <span class="has-text-danger">{{.errors.Language}}</span>
                     </label>
                     <div class="select">
-                        <select name="Language" value="{{.submission.Language}}">
+                        <select id="language-select" name="Language" value="{{.submission.Language}}">
                             <option value="python">Python</option>
                             <!-- <option value="javascript">Javascript</option> -->
                             <!-- <option value="go">Go</option> -->
@@ -35,7 +35,7 @@
                         <span class="has-text-danger">{{.errors.SubmittedCode}}</span>
                     </label>
                     <div class="control">
-                        <textarea class="textarea" name="SubmittedCode" rows="20">{{.submission.SubmittedCode}}</textarea>
+                        <textarea id="code-editor" class="textarea" name="SubmittedCode" rows="20">{{.submission.SubmittedCode}}</textarea>
                     </div>
                 </div>
                 <div class="block">
@@ -46,5 +46,14 @@
             </form>
         </div>
     </div>
+    <script>
+        var editor = document.getElementById("code-editor");
+        var myCodeMirror = CodeMirror.fromTextArea(editor, {smartIndent: true, theme: 'base16-dark', indentUnit: 4});
+        var languageSelect = document.getElementById("language-select");
+        myCodeMirror.setOption('mode', languageSelect.value);
+        languageSelect.addEventListener("change", function (ev) {
+            myCodeMirror.setOption('mode', ev.target.value);
+        });
+    </script>
 </div>
 {{ template "bottom" .}}
