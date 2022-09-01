@@ -30,3 +30,4 @@ jobs:
           key: ${{ secrets.SERVER_SSH_PRIVATE_KEY }}
           port: 22
           script: ./coding-challenges/deploy.sh
+          debug: true
