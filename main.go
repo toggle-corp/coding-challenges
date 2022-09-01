@@ -40,7 +40,7 @@ func main() {
 	if utils.GetOSEnv("GIN_MODE", "local") == "release" {
 		// get key and cert
 		// r.RunTLS("0.0.0.0:443", "./server.cert", "./server.keys")
-		err := http.ListenAndServeTLS("0.0.0.0:443", "./server.cert", "./server.key", r)
+		err := http.ListenAndServeTLS("0.0.0.0:443", "/certs/server.cert", "/certs/server.key", r)
 		if err != nil {
 			fmt.Println("Could not start WebServer")
 			fmt.Println(err)
