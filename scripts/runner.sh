@@ -41,6 +41,15 @@ cp /tmp/code_$submission_id /tmp/$dirname/solution.$ext
 cp /tmp/test_$submission_id /tmp/$dirname/test_inputs
 cp /tmp/out_$submission_id /tmp/$dirname/test_outputs
 
+# Add extra export statements for js
+case $lang in
+    javascript)
+        echo "module.exports = { solution }" >> /tmp/$dirname/solution.$ext
+        ;;
+    *)
+        ;;
+esac
+
 runnerfile=runner.$ext
 errpath=/tmp/$dirname/errs
 # Copy runner to tmp location
