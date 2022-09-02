@@ -32,6 +32,7 @@
             </div>
         </div>
     {{end}}
+    {{ if not .user.IsAdmin }}
     <div class="block">
         <a href="/challenge/{{.submission.ChallengeID}}">
             <button type="button" class="button is-success is-link">
@@ -39,5 +40,6 @@
             </button>
         </a>
     </div>
+    {{ end }}
 </div>
 {{ template "bottom". }}

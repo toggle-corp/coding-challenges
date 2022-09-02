@@ -41,7 +41,9 @@
                         <td>{{if .IsPublished}}Published{{else}}Not Published{{end}}</td>
                         <td>{{.CreatedAt | formatAsDate}}</td>
                         <td>{{.CreatedBy}}</td>
-                        <td>{{.Submissions}}</td>
+                        <td>
+                            <a href="/submissions/{{.ID}}">{{.Submissions}}</a>
+                        </td>
                     </tr>
                 {{end}}
             </tbody>

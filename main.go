@@ -24,6 +24,7 @@ func main() {
 	r := gin.Default()
 	r.SetFuncMap(template.FuncMap{
 		"formatAsDate": utils.FormatAsDate,
+		"snakeToTitle": utils.SnakeToTitle,
 	})
 
 	r.LoadHTMLGlob("templates/*.html")

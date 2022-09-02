@@ -259,4 +259,21 @@ func SubmissionGetHandler(c *gin.Context, db *gorm.DB, user models.User, templat
 }
 
 func SubmissionsGetHandler(c *gin.Context, db *gorm.DB, user models.User, templateCtx gin.H) {
+	cid := c.Param("challengeId")
+	submissions := models.GetSubmissionsForChallenge(db, cid)
+	var message string
+	templateCtx["submissions"] = submissions
+	templateCtx["message"] = message
+	c.HTML(http.StatusOK, "submissions.html", templateCtx)
+}
+
+func GetChallengesHandler(c *gin.Context, db *gorm.DB, user models.User, templateCtx gin.H) {
+	templateCtx["action"] = c.Query("action")
+	if user.IsAdmin {
+		templateCtx["Challenges"] = models.GetChallenges(db, user)
+		c.HTML(http.StatusOK, "admin_dashboard.html", templateCtx)
+	} else {
+		templateCtx["Challenges"] = models.GetChallengesUser(db, user)
+		c.HTML(http.StatusOK, "user_challenges.html", templateCtx)
+	}
 }

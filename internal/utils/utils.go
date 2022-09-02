@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -15,12 +16,26 @@ import (
 	"toggle-corp/coding-challenges/internal/models"
 )
 
+func Map[T, V any](ts []T, fn func(T) V) []V {
+	result := make([]V, len(ts))
+	for i, t := range ts {
+		result[i] = fn(t)
+	}
+	return result
+}
+
 func FormatAsDate(t time.Time) string {
 	loc, err := time.LoadLocation("Asia/Kathmandu")
 	if err == nil {
 		t = t.In(loc)
 	}
 	return t.Format("02-Jan-2006 03:04:05 PM")
+}
+
+func SnakeToTitle(snake string) string {
+	splitted := strings.Split(snake, "_")
+	titled := Map(splitted, strings.Title)
+	return strings.Join(titled, " ")
 }
 
 func GetOSEnv(k string, defaultVal string) string {

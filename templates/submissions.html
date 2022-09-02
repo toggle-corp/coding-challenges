@@ -5,7 +5,7 @@
     </span>
     <div class="columns block">
         <h3 class="title is-4">
-            My submissions
+            Submissions
         </h3>
     </div>
     <div class="box columns block">
@@ -17,6 +17,7 @@
                     <th>Submitted At</th>
                     <th>Language</th>
                     <th>Status</th>
+                    <th>Submitted by</th>
                     <th>Score</th>
                 </tr>
             </thead>
@@ -29,7 +30,10 @@
                         </td>
                         <td>{{.CreatedAt | formatAsDate}}</td>
                         <td>{{.Language}}</td>
-                        <td class="has-text-{{if eq .Status "passed"}}success{{else}}danger{{end}}">{{.Status}}</td>
+                        <td class="has-text-{{if eq .Status "passed"}}success{{else}}danger{{end}}">
+                            {{.Status | snakeToTitle}}
+                        </td>
+                        <td>{{.SubmittedBy}}</td>
                         <td>{{.Score}}</td>
                     </tr>
                 {{end}}

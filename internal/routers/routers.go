@@ -31,7 +31,7 @@ func PrivateRoutes(g *gin.RouterGroup, db *gorm.DB) {
 	g.POST("/challenge/:id", withDBUser(h.ChallengesPostHandler, db))
 	g.GET("/my-submissions", withDBUser(h.MySubmissionsGetHandler, db))
 	g.GET("/submission/:id", withDBUser(h.SubmissionGetHandler, db))
-	g.POST("/submissions/:submissionId", withDBUser(h.SubmissionsGetHandler, db))
+	g.GET("/submissions/:challengeId", withDBUser(h.SubmissionsGetHandler, db))
 	g.GET("/new-challenge", withDBAdmin(h.NewChallengeGetHandler, db))
 	g.POST("/new-challenge", withDBAdmin(h.NewChallengePostHandler, db))
 	g.GET("/edit-challenge/:id", withDBAdmin(h.EditChallengeGetHandler, db))

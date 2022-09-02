@@ -15,7 +15,8 @@
                     <th>Title</th>
                     <th>Published At</th>
                     <th>Created By</th>
-                    <th>Submisssions</th>
+                    <th>Total Submisssions</th>
+                    <th>My Correct Submissions</th>
                 </tr>
             </thead>
             <tbody>
@@ -26,6 +27,7 @@
                         <td>{{.CreatedAt | formatAsDate}}</td>
                         <td>{{.CreatedBy}}</td>
                         <td>{{.Submissions}}</td>
+                        <td>{{.CorrectSubmissions}}</td>
                     </tr>
                 {{end}}
             </tbody>
