@@ -13,6 +13,7 @@ import (
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 
+	"toggle-corp/coding-challenges/internal/globals"
 	"toggle-corp/coding-challenges/internal/models"
 )
 
@@ -69,12 +70,24 @@ func ConnectDB() (*gorm.DB, error) {
 	return db, err
 }
 
-type DBHandler = func(_ *gin.Context, db_ *gorm.DB)
+type DBHandler = func(_ globals.HandlerArgs) globals.HandlerResult
 type DBUserHandler = func(_ *gin.Context, db_ *gorm.DB, _ models.User, _ gin.H)
 
 func WithDB(handler DBHandler, db *gorm.DB) func(c *gin.Context) {
 	return func(c *gin.Context) {
-		handler(c, db)
+		args := globals.HandlerArgs{
+			GinContext: c,
+			DB:         db,
+			GinMap:     gin.H{},
+		}
+		handlerResp := handler(args)
+		if handlerResp.ResponseType == globals.HTML {
+			c.HTML(
+				http.StatusOK,
+				handlerResp.TemplatePath,
+				handlerResp.GinMap,
+			)
+		}
 	}
 }
 
