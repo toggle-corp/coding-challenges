@@ -27,6 +27,15 @@
             </div>
         </div>
         <div class="field">
+            <label class="label" for="Delimeter">
+                Test Cases Delimeter(default: newline)
+                <span class="has-text-danger">{{.errors.Delimeter}}</span>
+            </label>
+            <div class="control">
+                <input type="text" class="input" name="Delimeter" rows="10" value="{{.challenge.Delimeter}}"/>
+            </div>
+        </div>
+        <div class="field">
             <label class="label" for="TestInputs">
                 Test Inputs
                 <span class="has-text-danger">{{.errors.TestInputs}}</span>

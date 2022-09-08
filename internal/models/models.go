@@ -26,6 +26,7 @@ type Challenge struct {
 	Score            int  `gorm:"default:10"`
 	CreatedBy        int
 	User             User `gorm:"foreignKey:CreatedBy"`
+	Delimeter        string
 }
 
 type SubmissionLanguage string

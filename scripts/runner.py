@@ -7,9 +7,12 @@ import sys
 TEST_INPUT = './test_inputs'
 TEST_OUTPUT = './test_outputs'
 
-def main():
+def main(delimeter = '\n'):
+    # NOTE: only used for input
     with open(TEST_INPUT) as finp, open(TEST_OUTPUT) as fout:
-        inputs = [x for x in finp.readlines() if x.strip()]
+        inpstr = finp.read()
+        splitted = [x.strip() for x in inpstr.split(delimeter)]
+        inputs = [x for x in splitted if x]
         outputs = [x for x in fout.readlines() if x.strip()]
     assert len(inputs) == len(outputs), "Test cases not aligned"
 
@@ -27,7 +30,6 @@ def main():
 
         if result != expected:
             print(f'Failed for test case {i+1}.', file=sys.stderr)
-            print(f'Expected:{expected} Got: {result}', file=sys.stderr)
             print(f'Passed {passed_count}/{total_count}', file=sys.stderr)
             sys.exit(43)
 
@@ -35,4 +37,8 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    if len(sys.argv) >= 2:
+        delimeter = sys.argv[1]
+        main(delimeter)
+    else:
+        main()

@@ -2,6 +2,7 @@
 
 lang=$1
 submission_id=$2
+delimeter=$3
 
 # seconds
 RUN_LIMIT=5
@@ -56,7 +57,7 @@ errpath=/tmp/$dirname/errs
 cp `pwd`/scripts/$runnerfile /tmp/$dirname/$runnerfile
 
 # run command
-cd /tmp/$dirname/ && timeout $RUN_LIMIT $runcmd $runnerfile 2> $errpath
+cd /tmp/$dirname/ && timeout $RUN_LIMIT $runcmd $runnerfile $delimeter 2> $errpath
 stat=$?
 
 if [[ "$stat" == "0" ]]; then

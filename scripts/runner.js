@@ -12,9 +12,9 @@ function normalApply(f,x) {
     return f(x);
 }
 
-function getTestData() {
+function getTestData(delimeter='\n') {
     const testInputStr = fs.readFileSync(TEST_INPUT, 'utf8');
-    const testInpItems = testInputStr.split(/\r?\n/).filter(x => !!x.trim());
+    const testInpItems = testInputStr.split(delimeter).filter(x => !!x.trim());
 
     assert(testInpItems.length > 0);
 
@@ -36,8 +36,8 @@ function getTestData() {
     return [testInput, testOutput, inpApplyFn]
 }
 
-function main() {
-    const [inps, expecteds, inpApplyFn] = getTestData();
+function main(delimeter='\n') {
+    const [inps, expecteds, inpApplyFn] = getTestData(delimeter);
     assert(inps.length == expecteds.length);
 
     let passedCount = 0;
@@ -46,7 +46,6 @@ function main() {
         const expected = expecteds[i];
         if (result != expected) {
             console.error(`Failed for test case ${i+1}.`);
-            console.error(`Expected: ${expected} Got: ${result}.`);
             console.error(`Passed ${passedCount}/${inps.length}`);
             process.exit(43);
         }
@@ -54,4 +53,9 @@ function main() {
     });
 }
 
-main();
+args = process.argv;
+if (args.length > 2) {
+    main(args[2]);
+} else {
+    main();
+}

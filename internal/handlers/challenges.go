@@ -110,6 +110,7 @@ func validateChallengeInputs(c *gin.Context) (models.Challenge, Error) {
 	testOutputs := c.PostForm("TestOutputs")
 	score := c.PostForm("Score")
 	isPublished := c.PostForm("IsPublished")
+	delimeter := c.PostForm("Delimeter")
 
 	valid := true
 	errors := make(Error)
@@ -152,6 +153,7 @@ func validateChallengeInputs(c *gin.Context) (models.Challenge, Error) {
 		TestOutputs:      testOutputs,
 		IsPublished:      published,
 		Score:            scoreVal,
+		Delimeter:        delimeter,
 	}
 	return challenge, nil
 }

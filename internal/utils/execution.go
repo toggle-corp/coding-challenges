@@ -67,10 +67,10 @@ func Execute(subs models.Submission, db *gorm.DB) {
 
 	var cmd *exec.Cmd
 	if GetOSEnv("GIN_MODE", "local") == "release" {
-		cmd = exec.Command("ssh", "runner@runnerenv", runnerScript, string(subs.Language), fmt.Sprint(subs.ID))
+		cmd = exec.Command("ssh", "runner@runnerenv", runnerScript, string(subs.Language), fmt.Sprint(subs.ID), challenge.Delimeter)
 	} else {
 		// Do not ssh, directly call
-		cmd = exec.Command(runnerScript, string(subs.Language), fmt.Sprint(subs.ID))
+		cmd = exec.Command(runnerScript, string(subs.Language), fmt.Sprint(subs.ID), challenge.Delimeter)
 	}
 	cmdCode, cmderr := runAndGetError(cmd)
 	if cmdCode == 0 {
