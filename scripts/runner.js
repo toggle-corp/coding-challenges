@@ -12,6 +12,14 @@ function normalApply(f,x) {
     return f(x);
 }
 
+function tryEval(x) {
+    try {
+        return eval(x);
+    } catch (e) {
+        return x;
+    }
+}
+
 function getTestData(delimeter='\n') {
     const testInputStr = fs.readFileSync(TEST_INPUT, 'utf8');
     const testInpItems = testInputStr.split(delimeter).filter(x => !!x.trim());
@@ -30,9 +38,9 @@ function getTestData(delimeter='\n') {
         inpApplyFn = normalApply;
     }
     const enclose = (x) => shouldEncloseBrackets ? '['+x+']' : x;
-    const testInput = testInpItems.map(lineStr => eval(enclose(lineStr)));
+    const testInput = testInpItems.map(lineStr => tryEval(enclose(lineStr)));
     const testOutputStr = fs.readFileSync(TEST_OUTPUT, 'utf8');
-    const testOutput = testOutputStr.split(/\r?\n/).filter(x => !!x.trim()).map(lineStr => eval(lineStr))
+    const testOutput = testOutputStr.split(/\r?\n/).filter(x => !!x.trim()).map(lineStr => tryEval(lineStr))
     return [testInput, testOutput, inpApplyFn]
 }
 

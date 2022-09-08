@@ -19,8 +19,15 @@ def main(delimeter = '\n'):
     total_count = len(inputs)
     passed_count = 0
     for i, (inp, out) in enumerate(zip(inputs, outputs)):
-        inpargs = eval(inp)
-        expected = eval(out)
+        try:
+            inpargs = eval(inp)
+        except SyntaxError:  # Just treat input as string
+            inpargs = inp
+
+        try:
+            expected = eval(out)
+        except SyntaxError:
+            expected = out
 
         if isinstance(inpargs, tuple):
             # Means solution takes multiple params
