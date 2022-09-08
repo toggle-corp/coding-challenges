@@ -222,7 +222,10 @@ func EditChallengePostHandler(c *gin.Context, db *gorm.DB, admin models.User, te
 		c.HTML(http.StatusBadRequest, "new-challenge.html", templateCtx)
 	}
 	// do update
-	res := db.Model(&ch).Select("IsPublished", "Title", "ProblemStatement", "TestInputs", "TestOutputs", "Score").Updates(challenge)
+	res := db.Model(&ch).Select(
+		"IsPublished", "Title", "ProblemStatement", "TestInputs", "TestOutputs", "Score",
+		"Delimeter",
+	).Updates(challenge)
 	if res.Error != nil {
 		templateCtx["error"] = "Cound not update"
 		templateCtx["challenge"] = challenge
