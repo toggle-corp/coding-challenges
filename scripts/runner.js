@@ -52,7 +52,7 @@ function main(delimeter='\n') {
     inps.forEach((inp, i) => {
         const result = inpApplyFn(solution.solution, inp);
         const expected = expecteds[i];
-        if (result != expected) {
+        if (JSON.stringify(result) != JSON.stringify(expected)) {
             console.error(`Failed for test case ${i+1}.`);
             console.error(`Passed ${passedCount}/${inps.length}`);
             process.exit(43);
