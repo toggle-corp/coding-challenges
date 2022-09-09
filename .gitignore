@@ -3,3 +3,7 @@ _postgres-data/
 keys/
 tmp/
 .env
+solution.js
+solution.py
+test_inputs
+test_outputs

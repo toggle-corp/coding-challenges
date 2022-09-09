@@ -22,7 +22,9 @@ function tryEval(x) {
 
 function getTestData(delimeter='\n') {
     const testInputStr = fs.readFileSync(TEST_INPUT, 'utf8');
-    const testInpItems = testInputStr.split(delimeter).filter(x => !!x.trim());
+    const testInpItems = testInputStr.split(delimeter)
+        .map(x => x.trim())
+        .filter(x => !!x);
 
     assert(testInpItems.length > 0);
 
@@ -65,5 +67,5 @@ args = process.argv;
 if (args.length > 2) {
     main(args[2]);
 } else {
-    main();
+    main('___');
 }
